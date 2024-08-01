@@ -2,31 +2,17 @@ import io
 import os
 import re
 
-
 from pathlib import Path
-
-# import dropbox
-
-# from dropbox.files import (
-#     FileMetadata,
-#     FolderMetadata
-# )
-
-# from dropbox.exceptions import ApiError
 
 import tempfile
 import textract
 from pypdf import PdfReader
 
-import pandas as pd
-
 import tiktoken
 
 
 def get_file_extension(filename):
-    """
-    stable function to extract a file's extension
-    """
+    """ stable function to extract a file's extension """
     extension = Path(filename).suffix
     return extension[1:] if extension else None
 
@@ -43,35 +29,6 @@ def normalize_path(raw_parent:str, raw_child:str):
     while '//' in path:
         path = path.replace('//', '/')
     return path.rstrip('/')
-
-
-# def download_dropbox_folder(dbx:dropbox.Dropbox, folder_path, files_downloaded=None):
-#     """
-#     downloads the files within a dropbox folder
-#     """
-#     if files_downloaded is None:
-#         files_downloaded = {}
-    
-#     path = normalize_path(folder_path, "/")
-    
-#     try:
-#         for entry in dbx.files_list_folder(path).entries:
-#             if isinstance(entry, FileMetadata):  
-#                 _, response = dbx.files_download(entry.id)
-#                 files_downloaded[entry.path_display] = response.content
-
-#             elif isinstance(entry, FolderMetadata): 
-#                 subfolder_path = normalize_path(folder_path, entry.name)
-#                 download_dropbox_folder(dbx, subfolder_path, files_downloaded)
-
-#     except ApiError as err:
-#         print(f'API error: {err}')
-#         print(dbx.files_list_folder(path).entries)
-
-#     except Exception as e:
-#         print(f'Unexpected Error: {e}')
-
-#     return files_downloaded
 
 
 def num_tokens_from_string(string:str, encoding_name:str='cl100k_base') -> int:
@@ -127,33 +84,6 @@ def parse_docx(response_content:str) -> dict:
     }
 
 
-def parse_xlsx(response_content) -> dict:
-    """
-    loops through each sheet in an excel file
-    creates a dictionary for each sheet where each column is a key,
-    and the dictionary values are the columns rows in list format
-    """
-    with io.BytesIO(response_content) as f:
-
-        xls = pd.ExcelFile(f)
-        sheets_texts = {}
-
-        for sheet_name in xls.sheet_names:
-            column_texts = {}
-            df = pd.read_excel(f, sheet_name=sheet_name, engine='openpyxl')
-            for column in df.columns:
-                texts = []
-                for index, item in df[column].items():
-                    if isinstance(item, str):
-                        texts.append((index, clean_text(item)))
-
-                column_texts[clean_text(column)] = texts
-            
-            sheets_texts[sheet_name] = column_texts
-
-    return sheets_texts
-
-
 def parse_files(raw_files:dict) -> dict:
     """
         parses each file in the raw_files dictionary
@@ -168,8 +98,8 @@ def parse_files(raw_files:dict) -> dict:
                 processed_files[get_file_name(file_name)] = parse_docx(response)
             elif ext == 'mp4':
                 pass
-            elif ext == 'xlsx':
-                processed_files[get_file_name(file_name)] = parse_xlsx(response)
+            # elif ext == 'xlsx':
+            #     processed_files[get_file_name(file_name)] = parse_xlsx(response)
             else:
                 pass
         else:
@@ -178,19 +108,86 @@ def parse_files(raw_files:dict) -> dict:
     return processed_files
 
 
-def create_folder(folder_name):
-    """ creates a sub directory in the project"""
-    # Get the current working directory
-    current_dir = os.getcwd()
+# def create_folder(folder_name):
+#     """ creates a sub directory in the project"""
+#     # Get the current working directory
+#     current_dir = os.getcwd()
     
-    # Define the new folder path
-    new_folder_path = os.path.join(current_dir, folder_name)
+#     # Define the new folder path
+#     new_folder_path = os.path.join(current_dir, folder_name)
     
-    try:
-        # Create the new folder
-        os.makedirs(new_folder_path)
-        print(f"Folder '{folder_name}' created successfully at {new_folder_path}")
-    except FileExistsError:
-        print(f"Folder '{folder_name}' already exists at {new_folder_path}")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+#     try:
+#         # Create the new folder
+#         os.makedirs(new_folder_path)
+#         print(f"Folder '{folder_name}' created successfully at {new_folder_path}")
+#     except FileExistsError:
+#         print(f"Folder '{folder_name}' already exists at {new_folder_path}")
+#     except Exception as e:
+#         print(f"An error occurred: {e}")
+
+
+# def parse_xlsx(response_content) -> dict:
+#     """
+#     loops through each sheet in an excel file
+#     creates a dictionary for each sheet where each column is a key,
+#     and the dictionary values are the columns rows in list format
+#     """
+#     with io.BytesIO(response_content) as f:
+
+#         xls = pd.ExcelFile(f)
+#         sheets_texts = {}
+
+#         for sheet_name in xls.sheet_names:
+#             column_texts = {}
+#             df = pd.read_excel(f, sheet_name=sheet_name, engine='openpyxl')
+#             for column in df.columns:
+#                 texts = []
+#                 for index, item in df[column].items():
+#                     if isinstance(item, str):
+#                         texts.append((index, clean_text(item)))
+
+#                 column_texts[clean_text(column)] = texts
+            
+#             sheets_texts[sheet_name] = column_texts
+
+#     return sheets_texts
+
+
+# def download_dropbox_folder(dbx:dropbox.Dropbox, folder_path, files_downloaded=None):
+#     """
+#     downloads the files within a dropbox folder
+#     """
+#     if files_downloaded is None:
+#         files_downloaded = {}
+    
+#     path = normalize_path(folder_path, "/")
+    
+#     try:
+#         for entry in dbx.files_list_folder(path).entries:
+#             if isinstance(entry, FileMetadata):  
+#                 _, response = dbx.files_download(entry.id)
+#                 files_downloaded[entry.path_display] = response.content
+
+#             elif isinstance(entry, FolderMetadata): 
+#                 subfolder_path = normalize_path(folder_path, entry.name)
+#                 download_dropbox_folder(dbx, subfolder_path, files_downloaded)
+
+#     except ApiError as err:
+#         print(f'API error: {err}')
+#         print(dbx.files_list_folder(path).entries)
+
+#     except Exception as e:
+#         print(f'Unexpected Error: {e}')
+
+#     return files_downloaded
+
+
+# import dropbox
+
+# from dropbox.files import (
+#     FileMetadata,
+#     FolderMetadata
+# )
+
+# from dropbox.exceptions import ApiError
+# import pandas as pd

@@ -10,6 +10,7 @@ openai = "*"
 voyageai = "*"
 textract = "*"
 pypdf = "*"
+tiktoken = "*"
 
 [dev-packages]
 
