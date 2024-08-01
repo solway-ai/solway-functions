@@ -7,20 +7,22 @@ from fastapi import (
 
 # import dropbox
 
+# def get_dbx_client(client:dropbox.Dropbox=Depends(get_dropbox_client)):
+#     return client
+
+#from api.v1.core.clients import get_dropbox_client
+    #download_dropbox_folder,
+
+
 from api.v1.core.config import settings
-from api.v1.core.clients import get_dropbox_client
+
 
 from api.v1.resources.blobstorage_helpers import (
     create_folder,
-    download_dropbox_folder,
     parse_files
 )
 
 router = APIRouter(tags=['dropbox'])
-
-# def get_dbx_client(client:dropbox.Dropbox=Depends(get_dropbox_client)):
-#     return client
-
 
 @router.get("/download_directory") 
 def get_project_folder(directory_name:str) -> dict:
@@ -48,4 +50,4 @@ def get_project_folder(directory_name:str) -> dict:
 
 
 
-router = APIRouter(tags=['dropbox'])
+router = APIRouter(tags=['blobstorage'])
