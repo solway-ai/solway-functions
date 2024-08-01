@@ -9,17 +9,17 @@ from fastapi import (
 
 from openai import AsyncOpenAI
 
-from api.v1.core.clients import get_openai_client
-from api.v1.core.config import settings
+from SolwayAPI.api.v1.core.clients import get_openai_client
+from SolwayAPI.api.v1.core.config import settings
 
 
-from api.v1.core.chain_prompts import (
+from SolwayAPI.api.v1.core.chain_prompts import (
     research_questions,
     thematic_areas,
     context
 )
 
-from api.v1.resources.skillchain_helpers import (
+from SolwayAPI.api.v1.resources.skillchain_helpers import (
     make_open_ai_request,
     update_internals,
     build_string
@@ -112,7 +112,7 @@ def get_oai_client(client:AsyncOpenAI=Depends(get_openai_client)):
 
 
 @router.get("/") 
-async def get_context(
+async def generate_context(
     output_folder_name:str, 
     research_plan_text:str, 
     overwrite_context:bool=False, 

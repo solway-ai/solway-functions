@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from v1.resources import(
+from SolwayAPI.api.v1.resources import(
     context,
     skillchain,
     blobstorage

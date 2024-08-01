@@ -14,11 +14,10 @@ from fastapi import (
     #download_dropbox_folder,
 
 
-from api.v1.core.config import settings
+from SolwayAPI.api.v1.core.config import settings
 
-
-from api.v1.resources.blobstorage_helpers import (
-    create_folder,
+from SolwayAPI.api.v1.resources.blobstorage_helpers import (
+    #create_folder,
     parse_files
 )
 
@@ -29,7 +28,7 @@ def get_project_folder(directory_name:str) -> dict:
     """
     writes the projects contents to the hosts disk
     """
-    create_folder(directory_name)
+    # create_folder(directory_name)
     # files = download_dropbox_folder(dbx_client, directory_name)
     files = None
     processed_files = parse_files(files)

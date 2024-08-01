@@ -169,7 +169,7 @@ def get_oai_client(client:AsyncOpenAI=Depends(get_openai_client)):
 
 
 @router.post("/") 
-async def get_skills(
+async def generate_skills(
     skills:Union[List[str], str],
     context:dict, 
     file_name:str,
