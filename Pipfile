@@ -8,7 +8,6 @@ fastapi = "*"
 azure-functions = "*"
 openai = "*"
 voyageai = "*"
-textract = "*"
 pypdf = "*"
 tiktoken = "*"
 

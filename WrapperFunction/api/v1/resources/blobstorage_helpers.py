@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 import tempfile
-import textract
+#import textract
 from pypdf import PdfReader
 
 import tiktoken
@@ -63,25 +63,25 @@ def parse_pdf(response_content) -> dict:
     return pdf_text
 
 
-def parse_docx(response_content:str) -> dict:
-    """
-        parses doc or docx file
-    """
-    with io.BytesIO(response_content) as f:
+# def parse_docx(response_content:str) -> dict:
+#     """
+#         parses doc or docx file
+#     """
+#     with io.BytesIO(response_content) as f:
 
-        with tempfile.NamedTemporaryFile(suffix='.docx') as temp_docx:
-            # Write the byte content to the temporary file
-            temp_docx.write(f.getbuffer())
-            temp_docx.seek(0)  # Seek back to the beginning of the file
+#         with tempfile.NamedTemporaryFile(suffix='.docx') as temp_docx:
+#             # Write the byte content to the temporary file
+#             temp_docx.write(f.getbuffer())
+#             temp_docx.seek(0)  # Seek back to the beginning of the file
             
-            text = textract.process(temp_docx.name)
-            text = text.decode('utf-8')
-            text = clean_text(text)
+#             text = textract.process(temp_docx.name)
+#             text = text.decode('utf-8')
+#             text = clean_text(text)
 
-    return {
-        "textIN": text,
-        "numTokens": num_tokens_from_string(text)
-    }
+#     return {
+#         "textIN": text,
+#         "numTokens": num_tokens_from_string(text)
+#     }
 
 
 def parse_files(raw_files:dict) -> dict:
@@ -94,10 +94,10 @@ def parse_files(raw_files:dict) -> dict:
         if ext:
             if ext == 'pdf':
                 processed_files[get_file_name(file_name)] = parse_pdf(response)
-            elif 'doc' in ext:
-                processed_files[get_file_name(file_name)] = parse_docx(response)
-            elif ext == 'mp4':
-                pass
+            # elif 'doc' in ext:
+            #     processed_files[get_file_name(file_name)] = parse_docx(response)
+            # elif ext == 'mp4':
+            #     pass
             # elif ext == 'xlsx':
             #     processed_files[get_file_name(file_name)] = parse_xlsx(response)
             else:
