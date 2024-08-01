@@ -2,14 +2,12 @@ import json
 import datetime
 import logging
 
-
 import azure.functions as func
 
-
-from WrapperFunction import app as fastapi_app
+from SolwayAPI import app as api
 
 app = func.AsgiFunctionApp(
-    app=fastapi_app, 
+    app=api, 
     http_auth_level=func.AuthLevel.ANONYMOUS
 )
 
