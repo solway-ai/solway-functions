@@ -6,6 +6,10 @@ name = "pypi"
 [packages]
 fastapi = "*"
 azure-functions = "*"
+openai = "*"
+voyageai = "*"
+textract = "*"
+pypdf = "*"
 
 [dev-packages]
 
