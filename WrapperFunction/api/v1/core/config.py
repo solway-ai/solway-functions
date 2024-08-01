@@ -1,8 +1,8 @@
 import os
 
-from solway_pipeline.api.v1.models.skillchain_models import Skill
+from api.v1.models.skillchain_models import Skill
 
-from solway_pipeline.api.v1.core.skill_prompts import (
+from api.v1.core.skill_prompts import (
     role,
     summarization,
     figures_toc,
@@ -22,11 +22,9 @@ class Settings:
     BASE_PORT = os.getenv("BASE_PORT", "")
 
     # API
-    OPENAI_API_KEY = "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"
-    VOYAGE_API_KEY = "pa-RxNy8eLNWQ1WAilqC7-0NXkNZtdLAqTVITilWMztztE"
-    DBX_TOKEN = 'sl.B5oLhkSLbN9k7jpE-9sjQB7uV6zYAwJ19WYOFivCNnKWa4b9iicqECUzsLoZE3aVbdEwTy1nw18z9_svn1bo2NlkFuf-s0CSiokDkJGUSrbIDe44lxIcNWDzuFVPUWJw2QVFG-fxmPOeCkKVWue3J0I'
-    APP_KEY = '8vgec6vg3xgznqf'
-    APP_SECRET = 'thun7ehtkhi0j4m'
+    OPENAI_API_KEY = ""
+    VOYAGE_API_KEY = ""
+
 
 
     PROJECT_DATA_FOLDER = "data/"
