@@ -44,7 +44,7 @@ def get_project_folder(directory_name:str) -> dict:
     # with open(f"{directory_name}/{settings.PROJECT_DOCS_PROCESSED_NAME}.json", 'w') as outF:
     #     json.dump(processed_files, outF)
 
-    return {"success"}
+    return documents_dict
 
 
 
