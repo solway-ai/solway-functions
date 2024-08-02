@@ -17,3 +17,6 @@ app.include_router(api_router)
 async def main():     
     return {"Solway AI Engineering and Consulting API"}
 
+@app.get("/hello") 
+async def main():     
+    return {"Solway AI Engineering and Consulting API"}

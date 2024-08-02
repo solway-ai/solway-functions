@@ -1,7 +1,3 @@
-import json
-import datetime
-import logging
-
 import azure.functions as func
 
 from SolwayAPI import app as api
