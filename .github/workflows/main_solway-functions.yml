@@ -81,4 +81,10 @@ jobs:
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
           scm-do-build-during-deployment: true
           enable-oryx-build: true
-          
+        
+      - name: Set WEBSITE_RUN_FROM_PACKAGE
+        run: |
+          az functionapp config appsettings set \
+            --name solway-functions \
+            --resource-group solway-api \
+            --settings WEBSITE_RUN_FROM_PACKAGE=1
