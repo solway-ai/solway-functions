@@ -13,8 +13,6 @@
 
 # from openai import AsyncOpenAI
 
-
-
 # from api.v1.core.chain_prompts import prompts
 
 # from solway_pipeline.api.v1.resources.skillchain_helpers import (
@@ -266,18 +264,10 @@
 #         skills:Union[str, List[str]]='*', 
 #         samples:int=None, 
 #         top_n:int=30,
-
-#         overwrite_prompts:bool=False,
-#         overwrite_documents:bool=False,
 #         overwrite_indices:bool=False,
-#         overwrite_rqs:bool=False,
-#         overwrite_skills:bool=False):
+#         overwrite_rqs:bool=False):
 #         """ runs the key functions of the class """
 
-#         if skills != '*':
-#             for skill in skills:
-#                 if skill not in self.prompts['skill_prompts'].keys():
-#                     raise SkillMissingError
 
 #         await self.get_internals(project_has_labels, overwrite_internals, overwrite_prompts)
         
@@ -289,31 +279,8 @@
 #             top_n=top_n, overwrite_rqs=overwrite_rqs
 #         )
 
-#         self.run_df = await self.run_skill_chain(
-#             skills=skills, 
-#             num_samples=samples, 
-#             overwrite_skills=overwrite_skills,
-#             write_master_json=True, 
-#             file_name=self.folder_name+'/completions.json'
-#         )
 
-#         return self.internals, self.run_df, self.rqs
-
-
-#         # if not os.path.exists(f"{output_folder_name}/prompts.json") or overwrite_prompts:
-
-#         #     self.prompts['skill_prompts'] = build_advanced_skills(
-#         #         build_skills(self.prompts['skill_prompts'], context['agent_internals'])
-#         #     )
-
-#         #     print("writing prompts")
-#         #     with open(f"{output_folder_name}/prompts.json", 'w') as outF:
-#         #         json.dump(self.prompts, outF)
-
-
-#         # print("reading prompts")
-#         # prompts = json.load(open(f"{output_folder_name}/prompts.json"))
-
+#         return self.rqs
 
 
 # # chunker = SemanticChunker(
@@ -325,7 +292,7 @@
 
 
 # # @app.get("/") 
-# # async def skillchain():   
+# # async def index():   
 
 # #     skillchain = SolwaySkillChain(
 # #         oai_async_client, vo, chunker,
