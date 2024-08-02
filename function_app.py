@@ -12,6 +12,8 @@ import azure.functions as func
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
+logging.basicConfig(level=logging.INFO)
+
 @app.route(route="HttpTrigger", auth_level=func.AuthLevel.ANONYMOUS)
 def HttpTrigger(req: func.HttpRequest) -> func.HttpResponse:
 
