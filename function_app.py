@@ -13,7 +13,7 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 @app.route(route="HttpTrigger", auth_level=func.AuthLevel.ANONYMOUS)
 def HttpTrigger(req: func.HttpRequest) -> func.HttpResponse:
 
-    from SolwayAPI import app as api
+    from SolwayAPI.api.v1.core.chain_prompts import research_questions
 
     logging.info('Python HTTP trigger function processed a request.')
 
