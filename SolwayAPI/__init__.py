@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from SolwayAPI.api.v1.api import api_router
+#from SolwayAPI.api.v1.api import api_router
 from SolwayAPI.api.v1.core.config import settings
 
 app = FastAPI(
@@ -9,7 +9,7 @@ app = FastAPI(
     tags=['main']
 )
 
-app.include_router(api_router)
+#app.include_router(api_router)
 
 @app.get("/") 
 async def main():     
@@ -22,5 +22,5 @@ async def demo():
 
 
 @app.get("/solway") 
-async def demo():     
+async def solway():     
     return {"Solwë"}
