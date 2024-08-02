@@ -1,6 +1,6 @@
 import azure.functions as func
 
-from SolwayAPI import app as api
+from SolwayAPI.main import app as api
 
 app = func.AsgiFunctionApp(
     app=api, 
