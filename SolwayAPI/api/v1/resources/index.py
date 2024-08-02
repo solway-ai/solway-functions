@@ -18,9 +18,7 @@
 # from api.v1.core.chain_prompts import prompts
 
 # from solway_pipeline.api.v1.resources.skillchain_helpers import (
-
 #     chunk_document_naive,
-
 # )
 
 
