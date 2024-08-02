@@ -17,16 +17,3 @@ app.include_router(api_router)
 async def main():     
     return {"Solway AI Engineering and Consulting API"}
 
-
-@app.get("/sample")
-async def index():
-    return {
-        "info": "Try /hello/Shivani for parameterized route.",
-    }
-
-
-@app.get("/hello/{name}")
-async def get_name(name: str):
-    return {
-        "name": name,
-    }
