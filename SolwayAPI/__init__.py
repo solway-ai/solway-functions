@@ -1,6 +1,4 @@
-from fastapi import (
-    FastAPI, 
-)
+from fastapi import FastAPI
 
 from SolwayAPI.api.v1.api import api_router
 from SolwayAPI.api.v1.core.config import settings
