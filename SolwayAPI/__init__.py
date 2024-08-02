@@ -19,3 +19,8 @@ async def main():
 @app.get("/demo") 
 async def demo():     
     return {"demo"}
+
+
+@app.get("/solway") 
+async def demo():     
+    return {"Solwë"}
