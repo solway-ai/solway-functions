@@ -38,6 +38,8 @@ ENV/
 env.bak/
 venv.bak/
 .solway-functions
+Pipfile
+Pipfile.lock
 
 
 # Byte-compiled / optimized / DLL files
