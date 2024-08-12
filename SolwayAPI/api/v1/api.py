@@ -3,7 +3,8 @@ from fastapi import APIRouter
 from SolwayAPI.api.v1.resources import(
     context,
     skillchain,
-    blobstorage
+    blobstorage,
+    notion
 )
 
 api_router = APIRouter(prefix="/v1")
@@ -24,4 +25,10 @@ api_router.include_router(
     blobstorage.router, 
     prefix="/files", 
     tags=["blobstorage"]
+)
+
+api_router.include_router(
+    blobstorage.router, 
+    prefix="/notion", 
+    tags=["notion"]
 )

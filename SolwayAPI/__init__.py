@@ -14,13 +14,3 @@ app.include_router(api_router)
 @app.get("/") 
 async def main():     
     return {"Solway AI Engineering and Consulting API"}
-
-
-@app.get("/demo") 
-async def demo():     
-    return {"demo"}
-
-
-@app.get("/solway") 
-async def solway():     
-    return {"Solwë"}
