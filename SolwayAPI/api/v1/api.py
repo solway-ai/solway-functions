@@ -28,7 +28,7 @@ api_router.include_router(
 )
 
 api_router.include_router(
-    blobstorage.router, 
+    notion.router, 
     prefix="/notion", 
     tags=["notion"]
 )

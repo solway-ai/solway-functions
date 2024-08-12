@@ -1,7 +1,7 @@
 import json
 import requests
 
-from typing import Union
+from typing import Union, Optional
 
 from fastapi import APIRouter
 
@@ -17,11 +17,11 @@ router = APIRouter(tags=['notion'])
 
 
 @router.post("/pages") 
-def create_notion_page(parent_id:str, name:str, title=Union[str, None], content=Union[str, None]):
+def create_child_notion_page(parent_id:str, title:str, subtitle:Optional[str]=None, content:Optional[str]=None):
     """ 
-    Creates a notion page 
-    Solway Root Project ID: "8b7ae4a9fcf946958cc9ec49578c020a"
-
+    Creates a child notion page of a parent Id.
+    Notion API does not support programatically creating "root" pages at the workspace level.     
+    The skill name is used as the subtitle, so will appear before the title in some instances
     """
     
     url = "https://api.notion.com/v1/pages"
@@ -42,13 +42,13 @@ def create_notion_page(parent_id:str, name:str, title=Union[str, None], content=
         page_ids = []
         for i, batch in enumerate(batches):
             
-            batch_title = f"{name}"
+            batch_title = f"{title}"
 
-            if title:
-                batch_title = f"{title} - {name}"
+            if subtitle:
+                batch_title = f"{subtitle} - {title}"
 
             if len(batches) > 1:
-                batch_title = f"{title} - Part {i+1} - {name}"
+                batch_title = f"{subtitle} - Part {i+1} - {title}"
 
             payload = {
                 "parent": {"type": "page_id", "page_id": parent_id},
@@ -82,7 +82,7 @@ def create_notion_page(parent_id:str, name:str, title=Union[str, None], content=
                     "title": [
                         {
                             "text": {
-                                "content": name
+                                "content": title
                             }
                         }
                     ]
@@ -97,8 +97,6 @@ def create_notion_page(parent_id:str, name:str, title=Union[str, None], content=
         response.raise_for_status()
         
         return response.json()['id']
-
-
 
 
     # for rq, answer in data_list.items():

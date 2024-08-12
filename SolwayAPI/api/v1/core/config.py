@@ -25,7 +25,9 @@ class Settings:
     OPENAI_API_KEY = ""
     VOYAGE_API_KEY = ""
 
-
+    #8b700d5f461f4d3eb1fdb5b1b6d185c9
+    #IF ROOT NOTION ID = "bd8449743fdf48f48adedd880ce51525"
+    NOTION_API_TOKEN = "secret_24aFPB3BkwARhtLChRAvKelSUPQmXU7Wm6k6ZjFbAaL"
 
     PROJECT_DATA_FOLDER = "data/"
     PROJECT_DOCS_INDEX_NAME = "documents_index.json"
