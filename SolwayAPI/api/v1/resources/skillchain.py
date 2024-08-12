@@ -2,7 +2,9 @@ import os
 import json
 import copy
 
-from typing import Dict, List, Union
+from datetime import datetime
+
+from typing import Dict, List, Union, Optional
 
 from fastapi import (
     APIRouter, 
@@ -21,6 +23,8 @@ from SolwayAPI.api.v1.resources.skillchain_helpers import (
     chunk_document_naive,
     make_open_ai_request,
 )
+
+from SolwayAPI.api.v1.resources.notion import create_child_notion_page
 
 class ContextError(Exception):
     def __init__(self, message="Could not Read Agent Internals: "):
@@ -175,12 +179,16 @@ async def generate_skills(
     file_name:str,
     output_folder_name:str, 
     overwrite_skills:bool=False, 
-    client:AsyncOpenAI=Depends(get_oai_client)) -> dict:   
+    client:AsyncOpenAI=Depends(get_oai_client),
+    notion_page_id:Optional[str]=None
+    ) -> dict:   
     """
     Third step in the Chain is to run the skills
     returns this information as JSON and writes to the disk of the host 
+
+    If notion_page_id is passed, this should correspond to the Documents Page ID, not the Project's ID
     """
-    return await SkillChain()(
+    generations = await SkillChain()(
         client=client,
         file_name=file_name, 
         skills=skills,
@@ -188,5 +196,16 @@ async def generate_skills(
         output_folder_name=settings.PROJECT_DATA_FOLDER+output_folder_name, 
         overwrite_skills=overwrite_skills, 
     )
+
+    created_pages = []
+    if notion_page_id:
+        for skill, generation in generations.items():
+            created_pages.append(create_child_notion_page(notion_page_id, title=file_name, subtitle=skill, content=generation))
+    
+    return {
+        "generations": generations,
+        "created_page_ids": created_pages,
+        "created_at": str(datetime.now())
+    }
 
 
