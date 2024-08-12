@@ -4,7 +4,7 @@ from SolwayAPI.api.v1.resources import(
     context,
     skillchain,
     blobstorage,
-    #notion
+    notion
 )
 
 api_router = APIRouter(prefix="/v1")
@@ -27,8 +27,8 @@ api_router.include_router(
     tags=["blobstorage"]
 )
 
-# api_router.include_router(
-#     notion.router, 
-#     prefix="/notion", 
-#     tags=["notion"]
-# )
+api_router.include_router(
+    notion.router, 
+    prefix="/notion", 
+    tags=["notion"]
+)
