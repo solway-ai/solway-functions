@@ -8,30 +8,30 @@ from SolwayAPI.api.v1.core.skill_prompts import (
     figures_toc,
     keypoints,
     action_items,
-    quotes
+    quotes,
 )
 
 class Settings:
 
     # Domain 
-    PROJECT_NAME:str = "solway.ai"
+    PROJECT_NAME:str = "api.solway.ai"
     PROJECT_VERSION:str = "1.0.0"
     OPENAPI_URL: str = "/openapi.json"
-    ENV:str = os.getenv("ENV", )
-    BASE_URL = os.getenv("BASE_URL", "")
-    BASE_PORT = os.getenv("BASE_PORT", "")
 
+    
     # API
-    OPENAI_API_KEY = ""
-    VOYAGE_API_KEY = ""
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") 
+    VOYAGE_API_KEY = os.getenv("VOYAGE_API_KEY") 
+    NOTION_API_KEY = os.getenv("NOTION_API_TOKEN") 
 
-    #8b700d5f461f4d3eb1fdb5b1b6d185c9
-    #IF ROOT NOTION ID = "bd8449743fdf48f48adedd880ce51525"
-    NOTION_API_TOKEN = "secret_24aFPB3BkwARhtLChRAvKelSUPQmXU7Wm6k6ZjFbAaL"
+    BLOB_STORAGE_CONN_STRING = os.getenv("BLOB_STORAGE_STRING")
+    BLOB_STORAGE_CONTAINER_NAME = os.getenv("BLOB_STORAGE_CONTAINER_NAME")
 
-    PROJECT_DATA_FOLDER = "data/"
-    PROJECT_DOCS_INDEX_NAME = "documents_index.json"
-    PROJECT_DOCS_PROCESSED_NAME = "documents.json"
+
+    TMP_FOLDER = "artifacts"
+    CONTEXT_FILE_NAME = "context.json"
+    INDEX_FILE_NAME = "index.json"
+
 
     AGENT_INTERNALS = { 
         "agent_internals": {

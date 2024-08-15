@@ -19,7 +19,6 @@ def html_to_notion_blocks(html_content):
     
     soup = BeautifulSoup(html_content, 'html.parser')
     blocks = []
-    print(soup)
 
     for element in soup.children:
         if element.name:

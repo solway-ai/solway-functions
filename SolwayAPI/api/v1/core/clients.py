@@ -3,6 +3,8 @@
 import voyageai
 from openai import AsyncOpenAI
 
+from azure.storage.blob import BlobServiceClient
+
 from .config import settings
 
 def get_openai_client():
@@ -12,6 +14,10 @@ def get_openai_client():
 
 def get_voyage_client():
     return voyageai.Client(api_key=settings.VOYAGE_API_KEY)
+
+
+def get_blob_storage_client():
+    return BlobServiceClient.from_connection_string(settings.BLOB_STORAGE_CONN_STRING)
 
 
 # def get_dropbox_client():

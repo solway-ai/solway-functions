@@ -1,11 +1,6 @@
 import copy
 
-from typing import Tuple, Dict, List
-
-#import pandas as pd
-
 from openai import AsyncOpenAI
-
 
 async def make_open_ai_request(client:AsyncOpenAI, system_prompt:str, user_message:str, model:str='gpt-4o', **request_kwargs):
     """
@@ -105,75 +100,31 @@ def chunk_document_naive(encoder:object, document:str, chunksize:int=40000, over
     return chunks
 
 
-# def get_all_textIN(document_name, parsed_pdf:dict) -> str:
-#     """
-#     the documents are parsed as dictionaries to preserve page number
-#     this documents gets all the raw text as one
-#     """
-#     format_string = document_name.upper() + "PAGE NUMBER: "
-#     try:
-#         return ' '.join([format_string + idx + "\n\n" + page.get("textIN") for idx, page in parsed_pdf.items()])
-#     except Exception as e:
-#         print(e)
-#         print(parsed_pdf)
+def get_all_textIN(document_name:str, parsed_pdf:dict) -> str:
+    """
+    the documents are parsed as dictionaries to preserve page number
+    this documents gets all the raw text as one
+    """
+    format_string = document_name.upper() + "PAGE NUMBER: "
+    try:
+        return ' '.join([format_string + str(idx) + "\n\n" + page.get("textIN") for idx, page in parsed_pdf.items()])
+    except Exception as e:
+        print(e)
+        print(parsed_pdf)
 
 
-# def get_all_numTokens(parsed_pdf:dict) -> str:
-#     """
-#     the documents are parsed as dictionaries to preserve page number
-#     this documents gets all the raw text as one
-#     """
-#     total_tokens = 0
-#     try:
-#         for idx, page in parsed_pdf.items():
-#             total_tokens += int(page.get('numTokens'))
+def get_all_numTokens(parsed_pdf:dict) -> str:
+    """
+    the documents are parsed as dictionaries to preserve page number
+    this documents gets all the raw text as one
+    """
+    total_tokens = 0
+    try:
+        for idx, page in parsed_pdf.items():
+            total_tokens += int(page.get('numTokens'))
 
-#     except Exception as e:
-#         print(e)
-#         print(parsed_pdf)
+    except Exception as e:
+        print(e)
+        print(parsed_pdf)
 
-#     return total_tokens
-
-
-# def pd_list_val_to_idx(df:pd.DataFrame, col:str) -> Tuple[Dict[int, str], Dict[int, List[float]]]:
-#     """ flattens the list of chunks / embs, returns a datastructure for use in retrieval"""
-#     outer_list = df[col].tolist()
-#     all_eles = [
-#         ele for eles in outer_list for ele in eles
-#     ]
-#     return {idx:ele for idx, ele in enumerate(all_eles)}
-
-
-# def corpus_statistics(processed_files:dict) -> None:
-#     """
-#     calculates the total number of tokens in the corpus
-#     and the estimated cost per skill
-#     """
-
-#     total_tokens = 0
-#     total_document_tokens = 0
-
-#     # if the extension is a .xlsx, the value will be a dict
-#     # all other extensions will be a string
-#     for key, value in processed_files.items():
-        
-#         total_tokens += num_tokens_from_string(key)
-
-#         if isinstance(value, dict):
-#             for _, inner_value in value.items():
-
-#                 if isinstance(inner_value, dict):      
-#                     for _, inner_inner_value in inner_value.items():
-#                         if isinstance(inner_inner_value, list):
-#                             for ele in inner_inner_value:
-#                                 if isinstance(ele, str):
-#                                     total_document_tokens += num_tokens_from_string(ele)
-
-#                 elif isinstance(inner_value, str):
-#                     total_document_tokens += num_tokens_from_string(inner_value)
-            
-#         elif isinstance(value, str):
-#             total_document_tokens += num_tokens_from_string(value)
-
-#     print(f"Total Project Tokens: {total_document_tokens}")
-#     print(f"Total Cost per Skill: ~${round((total_document_tokens / 1000) * .03, 4)}")
+    return total_tokens

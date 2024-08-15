@@ -1,12 +1,11 @@
-import json
 import requests
 
-from typing import Union, Optional
+from typing import Optional
 
 from fastapi import APIRouter
 
 from SolwayAPI.api.v1.core.config import settings
-from SolwayAPI.api.v1.resources.notion_helpers import (
+from SolwayAPI.api.v1.core.utils.notion_helpers import (
     naive_batch,
     html_to_notion_blocks,
     markdown_to_html
@@ -17,7 +16,7 @@ router = APIRouter(tags=['notion'])
 
 
 @router.post("/pages") 
-def create_child_notion_page(parent_id:str, title:str, subtitle:Optional[str]=None, content:Optional[str]=None):
+async def create_child_notion_page(parent_id:str, title:str, subtitle:Optional[str]=None, content:Optional[str]=None):
     """ 
     Creates a child notion page of a parent Id.
     Notion API does not support programatically creating "root" pages at the workspace level.     
@@ -27,7 +26,7 @@ def create_child_notion_page(parent_id:str, title:str, subtitle:Optional[str]=No
     url = "https://api.notion.com/v1/pages"
     
     headers = {
-        "Authorization": f"Bearer {settings.NOTION_API_TOKEN}",
+        "Authorization": f"Bearer {settings.NOTION_API_KEY}",
         "Content-Type": "application/json",
         "Notion-Version": "2022-06-28"
     }
@@ -99,41 +98,3 @@ def create_child_notion_page(parent_id:str, title:str, subtitle:Optional[str]=No
         return response.json()['id']
 
 
-    # for rq, answer in data_list.items():
-    #     source_document_name = rq
-    #     source_document_page_id = create_notion_page(parent_id=main_page_id, name=source_document_name, content=answer)
-
-
-    # # Iterate over each JSON object in the list and create pages
-    # for data in data_list:
-    #     # Create the source document page
-    #     source_document_name = data['source_document']
-    #     print(f"Creating {source_document_name} Page...")
-    #     source_document_page_id = create_notion_page(parent_id=main_page_id, name=source_document_name)
-    #     print(f"Created Page Id: {source_document_page_id}\n\n")
-
-    #     print(f"Adding {source_document_name} Content...")
-    #     # Create sub-pages for each key in the JSON (excluding 'source_document')
-    #     for key in ['summarization', 'keypoints', 'action_items', 'quotes', 'figures_toc']:
-    #         #print(f"Payload: {data[key]}")
-    #         if key != 'textIN':
-    #             create_notion_page(parent_id=source_document_page_id, name=source_document_name, title=key, content=data[key])
-    #         else:
-    #             create_notion_page(parent_id=source_document_page_id, name=source_document_name, title=key, content=data[key], is_raw_text=True)
-    #         print(f"Added: {key} to {source_document_name}")
-    #     print("")
-
-
-
-    # Folder name and JSON file
-    # root_page = "Sub-project #1 (Existing Practice Review)"
-
-    # # product_df.to_json(f"{FOLDER_NAME}_product.json", orient="records")
-    # block_content = f"{FOLDER_NAME}/skills/research_questions/research_questions.json"
-
-    # # Load the JSON data
-    # with open(block_content, 'r') as file:
-    #     data_list = json.load(file)
-
-    # main_page_id = create_notion_page(SOLWAY_PAGE_ID, f"Existing Practice Review Dev")
-    # return None
